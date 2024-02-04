@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose.yml
+    kompose.version: 1.32.0 (765fde254)
+  labels:
+    io.kompose.service: keycloak-mysql
+  name: keycloak-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: keycloak-mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose.yml
+        kompose.version: 1.32.0 (765fde254)
+      labels:
+        io.kompose.network/microservices-parent-updated-default: "true"
+        io.kompose.service: keycloak-mysql
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: keycloak
+            - name: MYSQL_PASSWORD
+              value: password
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_USER
+              value: keycloak
+          image: mysql:5.7
+          name: keycloak-mysql
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: keycloak-mysql-claim0
+      restartPolicy: Always
+      volumes:
+        - name: keycloak-mysql-claim0
+          persistentVolumeClaim:
+            claimName: keycloak-mysql-claim0
