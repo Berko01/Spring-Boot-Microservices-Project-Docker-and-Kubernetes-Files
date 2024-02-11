@@ -83,9 +83,11 @@ Select Authorization type as OAuth 2.0:
 Configure New Token:
 
 First, using the command where you obtained the port information, navigate to "localhost:PORT" (replace PORT with the Keycloak port number) in your browser. Then, select "spring-boot-microservices" as the Realm. Proceed to the "Client" section and choose "spring-cloud-client" from the list. Navigate to the "Credentials" section and copy the "Client Secret":
+
 ![Uygulama Ekran Görüntüsü](clientsecret.png)
 
 Use your client secret:
+
 ![Uygulama Ekran Görüntüsü](KeycloakConfigsPostman2.png)
 
 You are ready to go!
