@@ -94,7 +94,10 @@ You are ready to go!
 
 
 
+## Tests
 
+Postman Tests
+![Uygulama Ekran Görüntüsü](Postman.png)
 
 
 
@@ -134,7 +137,4 @@ Furthermore, important insights have been gained regarding Kubernetes networks.
 - [@Berko01](https://github.com/Berko01) development.
 
   
-## Tests
 
-Postman Tests
-![Uygulama Ekran Görüntüsü](Postman.png)
