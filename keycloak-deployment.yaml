@@ -23,8 +23,19 @@ spec:
         io.kompose.network/microservices-parent-updated-default: "true"
         io.kompose.service: keycloak
     spec:
+      volumes:
+        - name: realms-git-volume
+          emptyDir: {}
+      initContainers:
+        - name: clone-repo
+          image: alpine/git
+          command: ["sh", "-c", "git clone https://github.com/Berko01/KeycloakConfig.git /data"]
+          volumeMounts:
+            - name: realms-git-volume
+              mountPath: /data
       containers:
-        - args:
+        - name: keycloak
+          args:
             - start-dev
             - --import-realm
           env:
@@ -41,16 +52,8 @@ spec:
             - name: KEYCLOAK_ADMIN_PASSWORD
               value: admin
           image: quay.io/keycloak/keycloak:23.0.5
-          name: keycloak
           ports:
             - containerPort: 8080
-              hostPort: 8080
-              protocol: TCP
           volumeMounts:
-            - mountPath: /opt/keycloak/data/import
-              name: keycloak-claim0
-      restartPolicy: Always
-      volumes:
-        - name: keycloak-claim0
-          persistentVolumeClaim:
-            claimName: keycloak-claim0
+            - name: realms-git-volume
+              mountPath: /opt/keycloak/data/import
